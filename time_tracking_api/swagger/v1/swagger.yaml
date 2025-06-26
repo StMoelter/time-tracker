@@ -1,0 +1,253 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/entries":
+    get:
+      summary: List entries
+      tags:
+      - Entries
+      responses:
+        '200':
+          description: entries found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    date:
+                      type: string
+                      format: date
+                    duration:
+                      type: integer
+                    description:
+                      type: string
+                    project_id:
+                      type: integer
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                  required:
+                  - id
+                  - date
+                  - duration
+                  - description
+                  - project_id
+                  - created_at
+                  - updated_at
+    post:
+      summary: Create an entry
+      tags:
+      - Entries
+      parameters: []
+      responses:
+        '201':
+          description: entry created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date
+                duration:
+                  type: integer
+                description:
+                  type: string
+                project_id:
+                  type: integer
+              required:
+              - date
+              - duration
+              - description
+              - project_id
+  "/entries/{id}":
+    get:
+      summary: Retrieve an entry
+      tags:
+      - Entries
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: entry found
+        '404':
+          description: entry not found
+    put:
+      summary: Update an entry
+      tags:
+      - Entries
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: entry updated
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date
+                duration:
+                  type: integer
+                description:
+                  type: string
+                project_id:
+                  type: integer
+              required:
+              - date
+              - duration
+              - description
+              - project_id
+    delete:
+      summary: Delete an entry
+      tags:
+      - Entries
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: entry deleted
+        '404':
+          description: entry not found
+  "/projects":
+    get:
+      summary: List projects
+      tags:
+      - Projects
+      responses:
+        '200':
+          description: projects found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                  required:
+                  - id
+                  - name
+                  - created_at
+                  - updated_at
+    post:
+      summary: Create a project
+      tags:
+      - Projects
+      parameters: []
+      responses:
+        '201':
+          description: project created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+  "/projects/{id}":
+    get:
+      summary: Retrieve a project
+      tags:
+      - Projects
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: project found
+        '404':
+          description: project not found
+    put:
+      summary: Update a project
+      tags:
+      - Projects
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: project updated
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+    delete:
+      summary: Delete a project
+      tags:
+      - Projects
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: project deleted
+        '404':
+          description: project not found
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: 127.0.0.1:3000
